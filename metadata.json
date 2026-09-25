@@ -1,0 +1,6 @@
+{
+  "name": "Nasadef Download Page",
+  "description": "Portal Muat Turun Aplikasi Rasmi RazifApps@nasadef® - APK Apps & Games, Windows Apps, OS, USB Bootable Creators & Downloader",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,136 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with authentication and admin privileges",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The email address of the user"
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the user"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["super_admin", "admin", "user"],
+          "description": "The user role and access tier"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account registration timestamp"
+        }
+      },
+      "required": ["email", "role"]
+    },
+    "AppItem": {
+      "title": "AppItem",
+      "description": "Application metadata and download configuration",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "App title"
+        },
+        "version": {
+          "type": "string",
+          "description": "Semantic version"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category slug"
+        },
+        "downloadUrl": {
+          "type": "string",
+          "description": "Direct download URL"
+        },
+        "fileSize": {
+          "type": "string",
+          "description": "Human-readable file size"
+        },
+        "downloadsCount": {
+          "type": "number",
+          "description": "Total download counter"
+        }
+      },
+      "required": ["name", "version", "downloadUrl"]
+    },
+    "DownloadLog": {
+      "title": "DownloadLog",
+      "description": "Record of file downloads",
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string",
+          "description": "Target app identifier"
+        },
+        "appName": {
+          "type": "string",
+          "description": "Name of app"
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "Email of downloader if authenticated"
+        },
+        "isAdminDownload": {
+          "type": "boolean",
+          "description": "Whether triggered directly via admin without approval"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Download timestamp"
+        }
+      },
+      "required": ["appId", "appName", "timestamp"]
+    },
+    "WorkspaceSync": {
+      "title": "WorkspaceSync",
+      "description": "Google Drive, Sheets, Keep, and Picker sync status",
+      "type": "object",
+      "properties": {
+        "userEmail": {
+          "type": "string",
+          "description": "User email"
+        },
+        "action": {
+          "type": "string",
+          "description": "Sync action type (drive_export, sheet_export, keep_note, picker_import)"
+        },
+        "resourceId": {
+          "type": "string",
+          "description": "Google Drive File ID or Sheet ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of synced resource"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of action"
+        }
+      },
+      "required": ["userEmail", "action", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and privileges"
+    },
+    "/apps/{appId}": {
+      "schema": "AppItem",
+      "description": "Catalog apps and metadata"
+    },
+    "/downloads/{downloadId}": {
+      "schema": "DownloadLog",
+      "description": "Historical download logs"
+    },
+    "/workspace_sync/{syncId}": {
+      "schema": "WorkspaceSync",
+      "description": "Google Workspace sync and exports"
+    }
+  }
+}
